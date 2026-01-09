@@ -16,12 +16,21 @@ const Home = () => {
                         Discover the exact skills you need to land your dream job in tech.
                         Our AI-powered recommendation engine guides your learning journey.
                     </p>
-                    <Link to="/register" className="btn" style={{
-                        backgroundColor: 'var(--white)',
-                        color: 'var(--primary-color)',
-                        padding: '1rem 2rem',
-                        fontSize: '1.1rem'
-                    }}>Get Started for Free</Link>
+                    {localStorage.getItem('token') ? (
+                        <Link to="/dashboard" className="btn" style={{
+                            backgroundColor: 'var(--white)',
+                            color: 'var(--primary-color)',
+                            padding: '1rem 2rem',
+                            fontSize: '1.1rem'
+                        }}>Go to Dashboard</Link>
+                    ) : (
+                        <Link to="/register" className="btn" style={{
+                            backgroundColor: 'var(--white)',
+                            color: 'var(--primary-color)',
+                            padding: '1rem 2rem',
+                            fontSize: '1.1rem'
+                        }}>Get Started for Free</Link>
+                    )}
                 </div>
             </section>
 

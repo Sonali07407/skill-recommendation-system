@@ -1,16 +1,30 @@
 # Skill Recommendation System
 
-## How to Run
+## How to Run in VS Code
 
-1.  Open a terminal in VS Code (Terminal -> New Terminal).
+You need to run 3 things: MongoDB, the Backend, and the Frontend.
+
+### Step 1: Start MongoDB
+1.  Open a new terminal in VS Code (`Ctrl + Shift + \``).
+2.  Run this command to start the database:
+    ```powershell
+    mongod --dbpath "C:\data\db"
+    ```
+    *Keep this terminal open.*
+
+### Step 2: Start the Application
+1.  Open a **second** terminal (click the `+` icon in the terminal panel).
 2.  Make sure you are in the root folder `skill recomendation system`.
-3.  Run the following command:
+3.  Run this command to start both servers:
     ```bash
     npm run dev
     ```
-4.  This will start both the Backend and Frontend servers at the same time.
-5.  Open your browser and go to: [http://localhost:5173](http://localhost:5173)
+4.  This will start the Backend (port 5000) and Frontend (port 5173).
+
+### Step 3: Open in Browser
+-   Open [http://localhost:5173](http://localhost:5173) to use the app.
 
 ## Troubleshooting
-- If you see "MongoDB connection error", make sure your MongoDB is running.
-- If the page doesn't load, check the terminal for any error messages.
+-   **"MongoDB connection error"**: Make sure Step 1 is running and didn't close.
+-   **"Address already in use"**: You might have old terminals running. Kill them (Trash icon) and start over.
+

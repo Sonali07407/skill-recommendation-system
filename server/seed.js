@@ -38,7 +38,6 @@ const skills = [
     // DevOps
     { name: 'Docker', category: 'DevOps', relatedSkills: ['Containers', 'Linux'] },
     { name: 'Kubernetes', category: 'DevOps', relatedSkills: ['Docker', 'Orchestration'] },
-    { name: 'AWS', category: 'DevOps', relatedSkills: ['Cloud', 'CI/CD'] },
     { name: 'Jenkins', category: 'DevOps', relatedSkills: ['CI/CD'] }
 ];
 

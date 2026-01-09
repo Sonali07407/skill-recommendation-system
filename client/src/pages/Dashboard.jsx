@@ -24,16 +24,28 @@ const Dashboard = () => {
         }
     }, [navigate]);
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
     const getRecommendations = async () => {
         if (!user) return;
+        setLoading(true);
+        setError('');
         try {
-            const res = await axios.post('http://localhost:5000/api/skills/recommend', {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await axios.post(`${apiUrl}/api/skills/recommend`, {
                 userId: user.id,
                 targetRole
             });
             setRecommendations(res.data);
+            if (res.data.length === 0) {
+                setError('No recommendations found for this role based on your current skills.');
+            }
         } catch (err) {
             console.error(err);
+            setError('Failed to fetch recommendations. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -63,13 +75,21 @@ const Dashboard = () => {
                         <option value="Mobile Developer">Mobile Developer</option>
                         <option value="DevOps Engineer">DevOps Engineer</option>
                     </select>
-                    <button onClick={getRecommendations} className="btn btn-primary">Get Recommendations</button>
+                    <button onClick={getRecommendations} className="btn btn-primary" disabled={loading}>
+                        {loading ? 'Loading...' : 'Get Recommendations'}
+                    </button>
                 </div>
             </div>
 
             <h3 style={{ marginBottom: '1.5rem', fontSize: '1.8rem', color: 'var(--secondary-color)' }}>Recommended Skills</h3>
 
-            {recommendations.length === 0 ? (
+            {error && (
+                <div className="alert alert-danger" style={{ marginBottom: '1rem', padding: '1rem', backgroundColor: '#ffebee', color: '#c62828', borderRadius: 'var(--radius)' }}>
+                    {error}
+                </div>
+            )}
+
+            {recommendations.length === 0 && !loading ? (
                 <div style={{ textAlign: 'center', padding: '4rem', backgroundColor: '#f9f9f9', borderRadius: 'var(--radius)' }}>
                     <p style={{ fontSize: '1.2rem', color: 'var(--text-light)' }}>Select a role and click "Get Recommendations" to see your path.</p>
                 </div>
