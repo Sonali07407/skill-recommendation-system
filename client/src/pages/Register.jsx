@@ -13,7 +13,7 @@ const Register = () => {
     const onSubmit = async e => {
         e.preventDefault();
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const apiUrl = import.meta.env.VITE_API_URL || '';
             const res = await axios.post(`${apiUrl}/api/auth/register`, formData);
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));

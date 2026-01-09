@@ -32,7 +32,7 @@ const Dashboard = () => {
         setLoading(true);
         setError('');
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const apiUrl = import.meta.env.VITE_API_URL || '';
             const res = await axios.post(`${apiUrl}/api/skills/recommend`, {
                 userId: user.id,
                 targetRole
