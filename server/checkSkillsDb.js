@@ -1,39 +1,42 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
+require('dotenv').config();
 const Skill = require('./models/Skill');
+const User = require('./models/User');
 
-const checkSkills = async () => {
+const checkData = async () => {
     try {
+        const fs = require('fs');
+        let output = '';
+
         await mongoose.connect(process.env.MONGO_URI);
-        console.log('MongoDB connected');
+        output += 'Connected to DB\n';
 
-        const skills = await Skill.find({});
-        console.log(`\nTotal skills in database: ${skills.length}\n`);
+        const skillCount = await Skill.countDocuments();
+        output += `Total Skills: ${skillCount}\n`;
 
-        if (skills.length === 0) {
-            console.log('WARNING: No skills found in the database!');
+        if (skillCount > 0) {
+            const sampleSkill = await Skill.findOne();
+            output += `Sample Skill: ${JSON.stringify(sampleSkill)}\n`;
         } else {
-            // Group by category
-            const categories = {};
-            skills.forEach(skill => {
-                if (!categories[skill.category]) {
-                    categories[skill.category] = [];
-                }
-                categories[skill.category].push(skill.name);
-            });
-
-            console.log('Skills by Category:');
-            Object.keys(categories).forEach(cat => {
-                console.log(`  ${cat}: ${categories[cat].join(', ')}`);
-            });
+            output += 'No skills found\n';
         }
 
-        await mongoose.connection.close();
-        process.exit(0);
+        const users = await User.find().limit(1);
+        if (users.length > 0) {
+            output += `Sample User: ${JSON.stringify(users[0])}\n`;
+        } else {
+            output += 'No users found\n';
+        }
+
+        fs.writeFileSync('db_check_result.txt', output);
+        console.log('Check complete, results written to db_check_result.txt');
+
     } catch (err) {
-        console.error('Error:', err);
-        process.exit(1);
+        console.error(err);
+        require('fs').writeFileSync('db_check_result.txt', `Error: ${err.message}`);
+    } finally {
+        mongoose.connection.close();
     }
 };
 
-checkSkills();
+checkData();

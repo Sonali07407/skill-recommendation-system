@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNN Accuracy Plot</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>KNN Accuracy vs. k</h1>
+        <canvas id="knnChart"></canvas>
+    </div>
+
+    <script>
+        const data = {
+            "kValues": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            "scores": [0.85, 0.85, 0.85, 0.8, 0.85, 0.65, 0.5, 0.4, 0.3, 0.25, 0.25, 0.1, 0.05, 0, 0]
+        };
+
+        const ctx = document.getElementById('knnChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.kValues,
+                datasets: [{
+                    label: 'Cross-Validated Accuracy',
+                    data: data.scores,
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#2980b9',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Number of Neighbors (k)',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 1.0,
+                        title: {
+                            display: true,
+                            text: 'Accuracy Score',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: true, position: 'top' },
+                    tooltip: { enabled: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

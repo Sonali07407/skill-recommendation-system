@@ -8,13 +8,20 @@ const Login = () => {
 
     const { email, password } = formData;
 
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onChange = (e) => {
+        console.log(`Input Changed: ${e.target.name} = ${e.target.value}`);
+        setFormData(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+    };
 
     const onSubmit = async e => {
         e.preventDefault();
         try {
             const apiUrl = import.meta.env.VITE_API_URL || '';
-            const res = await axios.post(`${apiUrl}/api/auth/login`, formData);
+            const res = await axios.post(`${apiUrl}/api/auth/login`, formData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
             alert('Login Successful');

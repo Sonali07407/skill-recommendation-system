@@ -4,6 +4,14 @@
 
 You need to run 3 things: MongoDB, the Backend, and the Frontend.
 
+### Prerequisite: Install Dependencies
+Before running the app for the first time, install all dependencies:
+1.  Open a terminal in VS Code.
+2.  Run:
+    ```bash
+    npm run install-all
+    ```
+
 ### Step 1: Start MongoDB
 1.  Open a new terminal in VS Code (`Ctrl + Shift + \``).
 2.  Run this command to start the database:
