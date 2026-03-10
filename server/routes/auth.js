@@ -57,9 +57,7 @@ router.post('/register', async (req, res) => {
         );
     } catch (err) {
         console.error(`Registration error for ${registrationEmail}:`, err.message);
-        const fs = require('fs');
-        fs.appendFileSync('server.log', `${new Date().toISOString()} - Registration Error: ${err.message}\n${err.stack}\n`);
-        res.status(500).send('Server error');
+        res.status(500).json({ msg: 'Server error', error: err.message });
     }
 });
 
@@ -108,9 +106,7 @@ router.post('/login', async (req, res) => {
         );
     } catch (err) {
         console.error(err.message);
-        const fs = require('fs');
-        fs.appendFileSync('server.log', `${new Date().toISOString()} - Error: ${err.message}\n${err.stack}\n`);
-        res.status(500).send('Server error');
+        res.status(500).json({ msg: 'Server error', error: err.message });
     }
 });
 
