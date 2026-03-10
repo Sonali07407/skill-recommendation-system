@@ -16,7 +16,7 @@ const Register = () => {
     const onSubmit = async e => {
         e.preventDefault();
         try {
-            const apiUrl = 'http://localhost:5000';
+            const apiUrl = import.meta.env.VITE_API_URL || '';
             const res = await axios.post(`${apiUrl}/api/auth/register`, formData, {
                 headers: {
                     'Content-Type': 'application/json'
